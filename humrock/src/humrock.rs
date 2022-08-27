@@ -47,7 +47,7 @@ impl Humrock {
 
             handle
                 .db
-                .get_opt(key, &read_options)
+                .get_cf_opt(handle.cf_handle(), key, &read_options)
                 .context("failed to get")
         })
         .await

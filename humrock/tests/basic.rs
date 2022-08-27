@@ -17,6 +17,15 @@ async fn test_basic() -> Result<()> {
         .await?;
 
     assert_eq!(humrock.get(b"k1".to_vec(), 0).await?, None);
+    assert_eq!(
+        humrock.get(b"k1".to_vec(), 1).await?,
+        Some(b"v1-1".to_vec())
+    );
+    assert_eq!(
+        humrock.get(b"k1".to_vec(), 2).await?,
+        Some(b"v1-2".to_vec())
+    );
+    assert_eq!(humrock.get(b"k1".to_vec(), 3).await?, None);
 
     Ok(())
 }

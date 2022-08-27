@@ -10,7 +10,7 @@ anyhow = "1.0"
 futures = "0.3"
 lazy_static = "1.4"
 proto = { path = "../proto" }
-rocksdb = { git = "https://github.com/BugenZhao/rust-rocksdb.git", branch = "bz/timestamp" }
+rocksdb = { git = "https://github.com/BugenZhao/rust-rocksdb.git", rev = "b70626b" }
 tokio = { version = "1.20", features = [
     "rt",
     "rt-multi-thread",
