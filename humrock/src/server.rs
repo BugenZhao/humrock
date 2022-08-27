@@ -8,10 +8,10 @@ use tonic::{Request, Response, Status};
 
 use crate::humrock::Humrock;
 
-struct HumrockServer(Humrock);
+pub struct HumrockService(pub Humrock);
 
 #[tonic::async_trait]
-impl StateStore for HumrockServer {
+impl StateStore for HumrockService {
     async fn get(&self, request: Request<GetRequest>) -> Result<Response<GetResponse>, Status> {
         let request = request.into_inner();
 
