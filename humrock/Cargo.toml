@@ -1,0 +1,19 @@
+[package]
+name = "humrock"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+anyhow = "1.0.62"
+futures = "0.3.23"
+lazy_static = "1.4"
+proto = { path = "../proto"}
+rocksdb = { git = "https://github.com/BugenZhao/rust-rocksdb.git", branch = "bz/timestamp"}
+tokio = "1.20"
+tokio-stream = "0.1.9"
+tonic = "0.8"
+
+[dev-dependencies]
+tempfile = "3.3"

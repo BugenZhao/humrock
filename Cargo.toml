@@ -1,0 +1,2 @@
+[workspace]
+members = ["humrock", "proto", "workspace-hack"]

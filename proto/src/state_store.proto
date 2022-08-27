@@ -1,0 +1,57 @@
+syntax = "proto3";
+
+package state_store;
+
+enum Operation {
+  PUT = 0;
+  DELETE = 1;
+}
+
+message KeyValue {
+  bytes key = 1;
+  bytes value = 2;
+}
+
+enum BoundType {
+  UNBOUNDED = 0;
+  EXCLUDED = 1;
+  INCLUDED = 2;
+}
+
+message GetRequest {
+  bytes key = 1;
+  uint64 epoch = 2;
+}
+
+message GetResponse {
+  bool exists = 1;
+  bytes value = 2;
+}
+
+message IngestBatchRequest {
+  repeated KeyValue kvs = 1;
+  repeated Operation operations = 2;
+  uint64 epoch = 3;
+}
+
+message IngestBatchResponse {
+  uint64 size = 1;
+}
+
+message KeyBound {
+  bytes key = 1;
+  BoundType bound_type = 2;
+}
+
+message IterateRequest {
+  KeyBound start = 1;
+  KeyBound end = 2;
+  uint64 limit = 3;
+  uint64 epoch = 4;
+}
+
+service StateStore {
+  rpc Get(GetRequest) returns (GetResponse);
+  rpc IngestBatch(IngestBatchRequest) returns (IngestBatchResponse);
+  rpc Iterate(IterateRequest) returns (stream KeyValue);
+}
