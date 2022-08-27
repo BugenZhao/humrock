@@ -2,7 +2,8 @@ use std::{ops::Bound, path::Path, sync::Arc};
 
 use anyhow::{Context, Result};
 use rocksdb::{
-    ColumnFamily, Direction, IteratorMode, Options, ReadOptions, WriteBatch, WriteOptions,
+    ColumnFamily, ColumnFamilyDescriptor, Direction, IteratorMode, Options, ReadOptions,
+    WriteBatch, WriteOptions,
 };
 use tokio::sync::mpsc::{channel, Receiver};
 
@@ -16,9 +17,18 @@ impl Handle {
         let mut options = Options::default();
         options.create_if_missing(true);
         options.set_comparator_with_u64_ts();
+        options.create_missing_column_families(true);
 
-        let mut db = rocksdb::DB::open(&options, path).unwrap();
-        db.create_cf("humrock", &options).unwrap();
+        let db = rocksdb::DB::open_cf_descriptors(
+            &options,
+            path,
+            [
+                ColumnFamilyDescriptor::new("default", Options::default()),
+                ColumnFamilyDescriptor::new("humrock", options.clone()),
+            ],
+        )
+        .unwrap();
+
         Self { db: db.into() }
     }
 

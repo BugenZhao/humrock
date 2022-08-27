@@ -12,7 +12,7 @@ fn main() {
 }
 
 async fn run() -> Result<()> {
-    let humrock = Humrock::new(Path::new("default"));
+    let humrock = Humrock::new(Path::new("data"));
 
     tonic::transport::Server::builder()
         .add_service(StateStoreServer::new(HumrockService(humrock)))
